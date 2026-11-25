@@ -15,7 +15,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity> handleNotFound(ResourceNotFoundException ex) {
+    public ResponseEntity<Object> handleNotFound(ResourceNotFoundException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.NOT_FOUND.value());
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity> handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Object> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> fieldErrors = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(error -> fieldErrors.put(error.getField(), error.getDefaultMessage()));
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity> handleUnreadableBody(HttpMessageNotReadableException ex) {
+    public ResponseEntity<Object> handleUnreadableBody(HttpMessageNotReadableException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
